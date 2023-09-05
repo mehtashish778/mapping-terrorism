@@ -97,7 +97,7 @@ def main():
         
         # Display a subset of the data (e.g., first 50 rows)
         st.table(result)
-        st.plotly_chart(result.plot(x='Year', y='Civilians', kind='line'))
+        # st.plotly_chart(result.plot(x='Year', y='Civilians', kind='line'))
 
 
 
