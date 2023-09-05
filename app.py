@@ -94,16 +94,22 @@ def main():
         result = terrorist_attack_fatalities(selected_option)
         
         # Display a subset of the data (e.g., first 50 rows)
-        st.table(result.head(50))
+        st.table(result)
 
-    with st.container():
-        st.markdown("Made By Ashish Mehta")
 
-    df1 = pd.DataFrame(np.random.randn(1000, 2) / [50, 50] + [37.76, -122.4], columns=['lat', 'lon'])
+
+    # with st.container():
+    #     st.markdown("Made By Ashish Mehta")
+
+    # df1 = pd.DataFrame(np.random.randn(1000, 2) / [50, 50] + [37.76, -122.4], columns=['lat', 'lon'])
     
-    # Create a Folium map and add markers or other elements as needed
-    m = folium.Map(location=[37.76, -122.4], zoom_start=10)
-    folium_static(m)
+    # # Create a Folium map and add markers or other elements as needed
+    # m = folium.Map(location=[37.76, -122.4], zoom_start=10)
+    # folium_static(m)
+    
+    
 
 if __name__ == "__main__":
     main()
+
+    
