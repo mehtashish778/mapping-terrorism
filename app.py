@@ -118,13 +118,10 @@ def main():
         
     df1 = pd.DataFrame(np.random.randn(1000, 2) / [50, 50] + [37.76, -122.4],columns=['lat', 'lon'])
 
-<<<<<<< HEAD
     # st.map(df1)
     st.area_chart(result)
 
-=======
     # st.map(df1)
->>>>>>> 986154b89f4689d6cb2e59dc2c236d9b7759a2da
     
     
 
