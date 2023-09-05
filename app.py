@@ -1,18 +1,15 @@
 import streamlit as st
-import folium
-from streamlit_folium import folium_static
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 import numpy as np
+import folium
+from streamlit_folium import folium_static
 
-
-
-
-
-
+# Cache the result of the function
+@st.cache(allow_output_mutation=True)
 def terrorist_attack_fatalities(country_name):
-    supported_countries = ['afghanistan', 'bangladesh', 'bhutan', 'pakistan', 'india', 'nepal', 'maldives','srilanka']
+    supported_countries = ['afghanistan', 'bangladesh', 'bhutan', 'pakistan', 'india', 'nepal', 'maldives', 'srilanka']
 
     if country_name.lower() not in supported_countries:
         return "We don't have data for this country."
@@ -63,20 +60,9 @@ def terrorist_attack_fatalities(country_name):
     else:
         return "Failed to retrieve the webpage."
 
-
-
-
-
-
-
-
-
 def main():
+    st.set_page_config(layout="wide")
     
-    
-    st. set_page_config(layout="wide")
-    
-    # Add custom CSS styling to control container dimensions
     st.markdown(
         """
         <style>
@@ -86,42 +72,42 @@ def main():
             border: 1px solid #ddd;
             border-radius: 5px;
             }
-    
+
         .container2 {
             width: 100%;
             padding: 1rem;
             border: 1px solid #ddd;
             border-radius: 5px;
             }
-            
+
         </style>
         """,
         unsafe_allow_html=True
     )
 
-    # Create a container for the dropdown
     with st.container():
         st.header("Yearly Fatalities")
-        options =['india','afghanistan', 'bangladesh', 'bhutan', 'pakistan',  'nepal', 'maldives','srilanka']
+        options = ['india', 'afghanistan', 'bangladesh', 'bhutan', 'pakistan', 'nepal', 'maldives', 'srilanka']
         selected_option = st.selectbox("Select Country:", options)
 
-    # Create a container for the output
     with st.container():
         result = terrorist_attack_fatalities(selected_option)
         
-        st.table(result)
-        # st.write(result,unsafe_allow_html=True, className="full-width")
-        
-        
+        # Display a subset of the data (e.g., first 50 rows)
+        st.table(result.head(50))
+
     with st.container():
         st.markdown("Made By Ashish Mehta")
-        
-    df1 = pd.DataFrame(np.random.randn(1000, 2) / [50, 50] + [37.76, -122.4],columns=['lat', 'lon'])
 
-    # st.map(df1)
-    st.area_chart(result)
+    df1 = pd.DataFrame(np.random.randn(1000, 2) / [50, 50] + [37.76, -122.4], columns=['lat', 'lon'])
+    
+    # Create a Folium map and add markers or other elements as needed
+    m = folium.Map(location=[37.76, -122.4], zoom_start=10)
+    folium_static(m)
 
-    # st.map(df1)
+if __name__ == "__main__":
+    main()
+
     
     
 
