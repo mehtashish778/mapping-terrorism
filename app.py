@@ -5,8 +5,7 @@ import pandas as pd
 import numpy as np
 import folium
 from streamlit_folium import folium_static
-import plotly.express as px
-
+import plotly.express.px as px
 
 # Cache the result of the function
 @st.cache(allow_output_mutation=True)
