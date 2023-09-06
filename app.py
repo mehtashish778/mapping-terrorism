@@ -6,9 +6,10 @@ import numpy as np
 import folium
 from streamlit_folium import folium_static
 import plotly.express as px
+import matplotlib.pyplot as plt
 
 # Cache the result of the function
-@st.cache(allow_output_mutation=True)
+@st.cache_data
 def terrorist_attack_fatalities(country_name):
     supported_countries = ['afghanistan', 'bangladesh', 'bhutan', 'pakistan', 'india', 'nepal', 'maldives', 'srilanka']
 
@@ -67,52 +68,46 @@ def main():
     st.markdown(
         """
         <style>
-        .container1 {
-            width: 100%;
-            padding: 1rem;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            }
+        
+        .my-container {
+        background-color: red;
+        }
 
-        .container2 {
-            width: 100%;
-            padding: 1rem;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+        #MainMenu {visibility: hidden;}
+        footer {visibility: hidden;}
+        
+        div[data-testid="stVerticalBlock"] div:has(div.fixed-header) {
+            position: sticky;
+            top: 2.875rem;
+            background-color: white;
+            z-index: 999;
+            }
+        .fixed-header {
+            border-bottom: 1px solid black;
             }
 
         </style>
         """,
         unsafe_allow_html=True
     )
+    header = st.container()
+    header.title("South Asia Terrorism Portal")
+    header.write("""<div class='fixed-header'/>""", unsafe_allow_html=True)
 
     with st.container():
-        st.header("Yearly Fatalities")
+        st.header("Yearly Fatalities in Terrorism Related Acitvity")
         options = ['india', 'afghanistan', 'bangladesh', 'bhutan', 'pakistan', 'nepal', 'maldives', 'srilanka']
         selected_option = st.selectbox("Select Country:", options)
 
-    with st.container():
         result = terrorist_attack_fatalities(selected_option)
-        
-        # Display a subset of the data (e.g., first 50 rows)
-        st.table(result)
-        # st.plotly_chart(result.plot(x='Year', y='Civilians', kind='line'))
+        fig = px.line(result, x='Year', y=['Civilians', 'Security Forces', 'Terrorists/Insurgents/Extremists'],line_shape='spline')
+
+        st.plotly_chart(fig,use_container_width=True,theme='streamlit')       
 
 
-
-
-    # with st.container():
-    #     st.markdown("Made By Ashish Mehta")
-
-    # df1 = pd.DataFrame(np.random.randn(1000, 2) / [50, 50] + [37.76, -122.4], columns=['lat', 'lon'])
-    
-    # # Create a Folium map and add markers or other elements as needed
-    # m = folium.Map(location=[37.76, -122.4], zoom_start=10)
-    # folium_static(m)
-    
-    
 
 if __name__ == "__main__":
     main()
 
     
+
